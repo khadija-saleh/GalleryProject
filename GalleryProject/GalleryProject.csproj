@@ -20,7 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Gallery.Domian\Gallery.Domian.csproj" />
     <ProjectReference Include="..\Gallery.Persistance\Gallery.Persistance.csproj" />
+    <ProjectReference Include="..\Gallery.ServicesInerfaces\Gallery.ServicesInerfaces.csproj" />
+    <ProjectReference Include="..\Gallery.Services\Gallery.Services.csproj" />
   </ItemGroup>
 
 </Project>

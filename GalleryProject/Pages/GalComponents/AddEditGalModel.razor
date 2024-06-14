@@ -1,0 +1,72 @@
+﻿﻿@using Gallery.Domian.Entities
+@using Gallery.ServicesInerfaces
+
+
+@if (isVisible)
+{
+    <div class="modal show" tabindex="-1" style="display: block;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@((gal.id == 0) ? "Add Gallery" : "Edit Gallery")</h5>
+                    <button type="button" class="btn-close" aria-label="Close" @onclick="Cancel"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="name" @bind="gal.name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">description</label>
+                        <input type="text" class="form-control" id="isbn" @bind="gal.description">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updatedAt" class="form-label">update of the date</label>
+                        <input type="number" class="form-control" id="numberOfPages" @bind="gal.updatedAt">
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    <button type="button" class="btn btn-primary" @onclick="Save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@code {
+     [Parameter] public EventCallback OnSave { get; set; }
+    [Inject] public IGalrService GalService { get; set; }
+    
+    private bool isVisible;
+    
+    private Gal gal = new();
+
+    public void Show(Gal gal)
+    {
+        this.gal = gal;
+        isVisible = true;
+    }
+
+    private void Save()
+    {
+        if (gal.id == 0)
+        {
+            GalService.Save(gal);
+        }
+        else
+        {
+            GalService.Update(gal);
+        }
+
+        isVisible = false;
+        OnSave.InvokeAsync();
+    }
+
+    private void Cancel()
+    {
+        isVisible = false;
+    }
+}
+
+}

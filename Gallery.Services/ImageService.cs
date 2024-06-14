@@ -24,7 +24,7 @@ namespace Gallery.Services
         {
             using var db = _contextFactory.CreateDbContext();
 
-            var tmp = db.Images.FirstOrDefault(x => x.Id == image.Id);
+            var tmp = db.Images.FirstOrDefault(x => x.id == image.id);
 
             if (tmp == null)
             {
@@ -41,7 +41,7 @@ namespace Gallery.Services
 
             using var db = (_contextFactory.CreateDbContext());
 
-            var tmp = db.Images.FirstOrDefault(x => x.Id == image.Id);
+            var tmp = db.Images.FirstOrDefault(x => x.id == image.id);
 
             if (tmp != null)
             {
@@ -58,7 +58,7 @@ namespace Gallery.Services
         {
             using var db = _contextFactory.CreateDbContext();
 
-            var tmp = db.Images.FirstOrDefault(x => x.Id == image.Id);
+            var tmp = db.Images.FirstOrDefault(x => x.id == image.id);
 
             if (tmp != null)
             {

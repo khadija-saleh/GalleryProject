@@ -1,0 +1,87 @@
+﻿
+@page "/Gallery"
+@rendermode InteractiveServer
+
+@using Gallery.Domian.Entities
+@using Gallery.ServicesInerfaces
+@using Gallery.Services
+
+<h3>GalList</h3>
+
+<button class="btn btn-primary" @onclick="ShowAddModal">Add New Gallery</button>
+
+<br />
+
+@if (gals == null)
+{
+    <span>Loading...</span>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>name</th>
+                <th>description</th>
+                <th>updatedAt</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var gal in gals)
+            {
+                <tr>
+                    <td>@gal.name</td>
+                    <td>@gal;.description</td>
+                    <td>@gal.updatedAt</td>
+                    <td>
+                        <button class="btn btn-secondary" @onclick="() => ShowEditModal(gal)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteGal(gal)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<AddEditGalModal @ref="addEditGalModal" OnSave="RefreshList" />
+
+@code {
+     [Inject] IGalrService GalService { get; set; }
+
+    private List<Gal> gals;
+
+    private AddEditGalModal  addEditGalModal;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadGals();
+    }
+
+    private async Task LoadGals()
+    {
+        gals = await GalService.GetAll();
+    }
+
+    private void ShowAddModal()
+    {
+        addEditGalModal.Show(new Gal());
+    }
+
+    private void ShowEditModal(Gal gal)
+    {
+        addEditGalModal.Show(gal);
+    }
+
+    private void DeleteGal(Gal gal)
+    {
+        GalService.Delete(gal);
+        LoadGals();
+    }
+
+    private void RefreshList()
+    {
+        LoadGals();
+    }
+
+    }
+    

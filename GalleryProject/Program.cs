@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
 using Gallery.Persistance;
+using Gallery.Services;
+using Gallery.ServicesInerfaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContextFactory<GalleryContext>(options =>
@@ -11,6 +14,9 @@ builder.Services.AddDbContextFactory<GalleryContext>(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+builder.Services.AddScoped<IGalrService, GalService>();
+builder.Services.AddScoped<IImageService, ImageService>();
 
 var app = builder.Build();
 
